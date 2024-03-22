@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link  href="https://cdn.jsdelivr.net/npm/vuetify@3.4.10/dist/vuetify.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@3.4.10/dist/vuetify.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <title>Student Home Page</title>
+</head>
+<body>
+    <div id = "app">
+        <v-app>
+            <v-container>
+                <v-card>
+                    <v-card-title class="bg-pink">{{title}}</v-card-title>
+                      <v-card-actions >
+                        <template v-if="user">
+                          <div class="pa-2">
+                              <v-avatar><img :src="user.photoURL" /></v-avatar>
+                          </div>
+                          <div class="pa-2">
+                              {{user.displayName}}<br />
+                              {{user.email}}<br/>
+                          </div>
+                      </template>
+                    </v-card-actions>
+
+                    <div  class="pa-2">
+                        
+                    </div>
+
+                    <v-card v-if="mode === 'แบบฟอร์ม'">
+                        <v-card-text class="pa-6">
+                            <v-card-title class="bg-blue-grey">{{mode}}</v-card-title>
+                            <v-text-field v-model="editcheckin.id" label="รหัส" ></v-text-field>
+                            <v-text-field type="datetime-local" v-model="editcheckin.class_date" label="เวลา"></v-text-field>
+                            <v-text-field v-model="editcheckin.section" label="ห้อง"></v-text-field>
+                            <div v-for="(q, index) in quiz" :key="index" class="pa-2"> 
+                              <h4>ข้อ {{ generateId(index)}}</h4>
+                              <h6>{{ q.quiz_name }}</h6>
+                              <v-text-field v-model="editcheckin[index + 1]" :label="'คำตอบ '"></v-text-field>
+                            </div>
+                            
+                       </v-card-text>
+                       <v-card-actions>
+                            <v-btn @click="saveqiz_back()">Save</v-btn>
+                            <v-btn @click="mode=0">Cancel</v-btn>
+                       </v-card-actions>
+                     </v-card>
+    
+                  
+                     <v-card-actions>
+                        <v-btn @click="sendob()" class="btn bg-blue mr-2">Check name</v-btn>
+                        <a type="button" class="btn bg-red" href="index.html">Back</a>
+                    </v-card-actions>
+                    
+    
+                    <v-card-actions>
+                        <v-btn @click="google_login()" v-if="!user"> Login</v-btn>
+                        <div v-if="user">
+                          <v-btn @click="google_logout()" v-if="user" class="btn btn-danger"> Logout</v-btn>   
+                        </div>
+                             
+                    </v-card-actions>
+                </v-card>
+               
+              <div class="pa-6 text-center">{{footer}}</div>
+            </v-container>        
+          </v-app>
+    </div>
+    <script src="src/js/script.js"></script>
+</body>
+</html>
