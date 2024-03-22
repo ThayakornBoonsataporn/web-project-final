@@ -45,11 +45,11 @@
                                 <td>Email</td>
                                 <td>Section</td>
                                 <td>Edit</td>
-                                <td>Delete students</td>
+                                <td>Delete student</td>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr v-for="(s) in students">
+                              <tr v-for="(s) in student">
                                 <td>{{s.id}}</td>
                                 <td>{{s.title}}</td>
                                 <td>{{s.fname}}</td>
@@ -67,7 +67,7 @@
                     <v-card-actions>
                         <!--<v-btn @click="readData()">Read Data (get)</v-btn>
                         <v-btn @click="autoRead()">Auto Read (onSnapshot)</v-btn>-->
-                        <v-btn @click="addData()" class="btn bg-green">Add Students</v-btn>
+                        <v-btn @click="addData()" class="btn bg-green">Add student</v-btn>
                         <v-btn @click="addDataqiz()" class="btn bg-blue">Add a question</v-btn>
                         <v-btn @click="cheksend()" class="btn btn-warning" >Answer</v-btn>
                         <v-btn @click="showsubject()" class="btn bg-pink" >All questions</v-btn>
@@ -77,8 +77,8 @@
                         <v-btn @click="google_login()" v-if="!user"> Login</v-btn>
                         <div v-if="user">
                           <v-btn @click="google_logout()" v-if="user" class="btn btn-danger"> Logout</v-btn>   
-                          <!-- <div v-for="(s) in students">
-                            <v-btn v-if="user.email == s.email"><a href="students.html">Next for students</a></v-btn>
+                          <!-- <div v-for="(s) in student">
+                            <v-btn v-if="user.email == s.email"><a href="student.html">Next for student</a></v-btn>
                           </div>  -->
                           <!-- <div v-for="(t) in teachers">
                             <v-btn v-if="user.email == t.email"><a href="teachers_home.html">Next for Teachers</a></v-btn>
@@ -193,7 +193,7 @@
             return {
                 title: "Web Application : สำหรับการเช็คชื่อนักศึกษา และ ถาม/ตอบ ในห้องเรียน",
                 footer: " ",
-              students: [],
+              student: [],
               editstd: {},
               editquiz: {},
               quiz: [],
@@ -221,14 +221,14 @@
                   });
                   this.teachers = teacherslist;
               });
-              db.collection("students")
+              db.collection("student")
               .get()
               .then((querySnapshot) => {
                   var stdlist = [];
                   querySnapshot.forEach((doc) => {
                   stdlist.push({ id: doc.id, ...doc.data() });
                   });
-                  this.students = stdlist;
+                  this.student = stdlist;
               });
               db.collection("quiz")
               .get()
@@ -259,12 +259,12 @@
                 }
               },
               autoRead() {
-                  db.collection("students").onSnapshot((querySnapshot) => {
+                  db.collection("student").onSnapshot((querySnapshot) => {
                   var stdlist = [];
                   querySnapshot.forEach((doc) => {
                       stdlist.push({ id: doc.id, ...doc.data() });
                   });
-                  this.students = stdlist;
+                  this.student = stdlist;
                   });
               },
               addData(){
@@ -295,14 +295,14 @@
                 this.editmode = "โชว์คำตอบทั้งหมด";
             },
               savedata(){
-                      db.collection("students").doc(this.editstd.id).set(this.editstd);
+                      db.collection("student").doc(this.editstd.id).set(this.editstd);
               },
               saveqiz(){
                     db.collection("quiz").doc(this.editquiz.id).set(this.editquiz);
               },
               deleteData(std) {
                   if (confirm("ต้องการลบข้อมูล")) {
-                  db.collection("students").doc(std.id).delete();
+                  db.collection("student").doc(std.id).delete();
                   }
               },
               deletesed(std) {
@@ -329,7 +329,7 @@
               }
             },
             getstudent(email){
-              db.collection("students")
+              db.collection("student")
                 .where("email","==",email)
                 .limit(1)
                 .get()
