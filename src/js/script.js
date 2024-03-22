@@ -85,10 +85,6 @@ const vueApp = Vue.createApp({
           location.reload();
         }
       },
-      savedata() {
-        db.collection("students").doc(this.editstd.id).set(this.editstd);
-        location.reload();
-      },
       computed: {
         filteredList() {
           if (this.search.trim() === '') {
@@ -135,17 +131,73 @@ const vueApp = Vue.createApp({
 		this.editmode = "แบบฟอร์ม";
 		this.editcheckin={};
 	},
-	  saveqiz_back(){
-			db.collection("checkin").doc(this.editcheckin.id).set(this.editcheckin);
-	  },
+    savedata() {
+        db.collection("students").doc(this.editstd.id).set(this.editstd)
+          .then(() => {
+            // Save successful
+            alert('Data saved successfully!');
+            location.reload(); // Refresh the page after saving
+          })
+          .catch((error) => {
+            // Handle errors if the save operation fails
+            console.error('Error saving data:', error);
+            alert('Error saving data. Please try again.');
+          });
+    },
+    saveqiz(){
+        db.collection("quiz").doc(this.editquiz.id).set(this.editquiz)
+          .then(() => {
+            // Save successful
+            alert('Data saved successfully!');
+            location.reload(); // Refresh the page after saving
+          })
+          .catch((error) => {
+            // Handle errors if the save operation fails
+            console.error('Error saving data:', error);
+            alert('Error saving data. Please try again.');
+          });
+    },
+    saveqiz_back() {
+        db.collection("checkin").doc(this.editcheckin.id).set(this.editcheckin)
+          .then(() => {
+            // Save successful
+            alert('Data saved successfully!');
+            location.reload(); // Refresh the page after saving
+          })
+          .catch((error) => {
+            // Handle errors if the save operation fails
+            console.error('Error saving data:', error);
+            alert('Error saving data. Please try again.');
+          });
+      },
 	  deleteData(std) {
 		  if (confirm("ต้องการลบข้อมูล")) {
-		  db.collection("student").doc(std.id).delete();
+		  db.collection("student").doc(std.id).delete()
+            .then(() => {
+                // Delete successful
+                alert('Data Deleted successfully!');
+                location.reload(); // Refresh the page after saving
+            })
+            .catch((error) => {
+                // Handle errors if the save operation fails
+                console.error('Error delete data:', error);
+                alert('Error delete data. Please try again.');
+            });
 		  }
 	  },
 	  deleteqiz(qiz) {
 		if (confirm("ต้องการลบข้อมูล")) {
-		db.collection("quiz").doc(qiz.id).delete();
+		db.collection("quiz").doc(qiz.id).delete()
+          .then(() => {
+              // Delete successful
+              alert('Data Deleted successfully!');
+              location.reload(); // Refresh the page after saving
+          })
+          .catch((error) => {
+              // Handle errors if the save operation fails
+              console.error('Error delete data:', error);
+              alert('Error delete data. Please try again.');
+          });
 		}
 	  },
 	  google_login() {
