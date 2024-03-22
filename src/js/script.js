@@ -24,8 +24,8 @@ const vueApp = Vue.createApp({
 		editquiz: {},
 		checkin:[],
 		editcheckin:{},
-        editmode: 0,
-        teachers: [],
+        mode: 0,
+        teacher: [],
         user: null,
         ustudent: null,
 		
@@ -39,12 +39,12 @@ const vueApp = Vue.createApp({
           this.user = null;
         }
       });
-      db.collection("teachers").get().then((querySnapshot) => {
-        const teacherslist = [];
+      db.collection("teacher").get().then((querySnapshot) => {
+        const teacherlist = [];
         querySnapshot.forEach((doc) => {
-          teacherslist.push({ email: doc.email, ...doc.data() });
+          teacherlist.push({ email: doc.email, ...doc.data() });
         });
-        this.teachers = teacherslist;
+        this.teacher = teacherlist;
       });
       db.collection("student").get().then((querySnapshot) => {
         const stdlist = [];
@@ -72,19 +72,54 @@ const vueApp = Vue.createApp({
 	  });
     },
     methods: {
-      google_login() {
-        // Using a popup.
-        const provider = new firebase.auth.GoogleAuthProvider();
-        provider.addScope("profile");
-        provider.addScope("email");
-        firebase.auth().signInWithPopup(provider);
-      },
-      google_logout() {
-        if (confirm("Are you sure?")) {
-          firebase.auth().signOut();
-          location.reload();
-        }
-      },
+        async google_login() {
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                provider.addScope("profile");
+                provider.addScope("email");
+                const result = await firebase.auth().signInWithPopup(provider);
+                const user = result.user;
+                if (user) {
+                this.user = user;
+                this.fetchTeacherData();
+                this.fetchStudentData();
+                }
+            } catch (error) {
+                console.error(error.message);
+            }
+            },
+            google_logout() {
+            if (confirm("Are you sure?")) {
+                firebase.auth().signOut();
+                window.location.href = 'index.html';
+            }
+            },
+            async fetchTeacherData() {
+            try {
+                const querySnapshot = await db.collection("teacher").get();
+                querySnapshot.forEach((doc) => {
+                this.teacher.push({ id: doc.id, ...doc.data() });
+                });
+            } catch (error) {
+                console.error("Error fetching teacher data:", error);
+            }
+            },
+            async fetchStudentData() {
+            try {
+                const querySnapshot = await db.collection("students").get();
+                querySnapshot.forEach((doc) => {
+                this.students.push({ id: doc.id, ...doc.data() });
+                });
+            } catch (error) {
+                console.error("Error fetching student data:", error);
+            }
+            },
+            loginAsTeacher(teacher) {
+            console.log("Logged in as teacher:", teacher);
+            // Redirect to teacher-specific page
+            window.location.href = 'admin_page.html';
+            }
+        },
       computed: {
         filteredList() {
           if (this.search.trim() === '') {
@@ -107,28 +142,28 @@ const vueApp = Vue.createApp({
 		  });
 	  },
 	  addData(){
-		  this.editmode = "เพิ่มนักเรียน";
+		  this.mode = "เพิ่มนักเรียน";
 		  this.editstd = {};
 	  },
 
 	  addDataqiz(){
-		this.editmode = "เพิ่มคำถาม";
+		this.mode = "เพิ่มคำถาม";
 		this.editquiz = {};
 		},
 		editqiz(std){
 			this.editstd = std;
-			this.editmode = "edit";
+			this.mode = "edit";
 		},
 	  edit(std){
 		  this.editstd = std;
-		  this.editmode = "เพิ่มนักเรียน";
+		  this.mode = "เพิ่มนักเรียน";
 	  },
 	  editqz(quiz){
 		this.editquiz = quiz;
-		this.editmode = "เพิ่มคำถาม";
+		this.mode = "เพิ่มคำถาม";
 	},
 	  sendob(){
-		this.editmode = "แบบฟอร์ม";
+		this.mode = "แบบฟอร์ม";
 		this.editcheckin={};
 	},
     savedata() {
@@ -157,6 +192,9 @@ const vueApp = Vue.createApp({
             alert('Error saving data. Please try again.');
           });
     },
+    generateId(index) {
+        return index + 1;
+    },
     saveqiz_back() {
         db.collection("checkin").doc(this.editcheckin.id).set(this.editcheckin)
           .then(() => {
@@ -169,6 +207,7 @@ const vueApp = Vue.createApp({
             console.error('Error saving data:', error);
             alert('Error saving data. Please try again.');
           });
+          
       },
 	  deleteData(std) {
 		  if (confirm("ต้องการลบข้อมูล")) {
@@ -200,34 +239,6 @@ const vueApp = Vue.createApp({
           });
 		}
 	  },
-	  google_login() {
-	  // Using a popup.
-	    var provider = new firebase.auth.GoogleAuthProvider();
-	    provider.addScope("profile");
-	    provider.addScope("email");
-	    firebase.auth().signInWithPopup(provider);
-	  },
-	  google_logout(){
-	    if(confirm("Are you sure?")){
-		  firebase.auth().signOut();
-		  window.location.href = 'index.html';
-	    }
-	  },
-	  getstudent(email){
-	    db.collection("student")
-		  .where("email","==",email)
-		  .limit(1)
-		  .get()
-		  .then(
-		    (querySnapshot) => {
-		       querySnapshot.forEach((doc) => {
-			     this.ustudent = { id: doc.id, ...doc.data() };
-		       });
-		    }
-	      );
-	  },
-    },
-  });
-  
+    });
   vueApp.use(vuetify).mount("#app");
   
