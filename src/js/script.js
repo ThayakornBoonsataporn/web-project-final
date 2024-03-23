@@ -19,7 +19,7 @@ const firebaseConfig = {
       return {
         title: "Web Application : สำหรับการเช็คชื่อนักศึกษา และ ถาม/ตอบ ในห้องเรียน",
         footer: " ",
-        students: [],
+        student: [],
         editstd: {},
         quiz: [],
         editquiz: {},
