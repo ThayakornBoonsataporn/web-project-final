@@ -86,14 +86,6 @@
                           </tbody>
                         </table>
                     </v-card-text>
-    
-                    <v-card-actions>
-                        <v-btn @click="google_login()" v-if="!user"> Login</v-btn>
-                        <div v-if="user">
-                          <v-btn @click="google_logout()" v-if="user" class="btn btn-danger"> Logout</v-btn>   
-                        </div>
-                             
-                    </v-card-actions>
                 </v-card>
 
                     <v-card-actions class="bg-primary">
