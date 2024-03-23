@@ -29,10 +29,11 @@ const firebaseConfig = {
         teacher: [],
         user: null,
         ustudent: null,
-        search: ''
+        search: '',
+        existingQuiz: false,
       };
     },
-    mounted() {
+    async mounted() {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           this.user = user.toJSON();
@@ -40,7 +41,16 @@ const firebaseConfig = {
           this.user = null;
         }
       });
-  
+        try {
+          const querySnapshot = await db.collection("quiz").get();
+          if (!querySnapshot.empty) {
+            this.existingQuiz = true;
+          } else {
+            this.existingQuiz = false;
+          }
+        } catch (error) {
+          console.error("Error fetching quiz data:", error);
+      };
       db.collection("teacher").get().then((querySnapshot) => {
         const teacherlist = [];
         querySnapshot.forEach((doc) => {
@@ -129,6 +139,12 @@ const firebaseConfig = {
       sendob() {
         this.mode = "แบบฟอร์ม";
         this.editcheckin = {};
+      },
+      cheksend(){
+        this.mode = "เช็คคำตอบ";
+      },
+      showsubject(){
+        this.mode = "แสดงคำตอบทั้งหมด";
       },
       savedata() {
         db.collection("student")
