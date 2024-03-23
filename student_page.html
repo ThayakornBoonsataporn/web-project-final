@@ -43,7 +43,7 @@
                         <v-card-text class="pa-6">
                             <v-card-title class="bg-blue-grey">{{mode}}</v-card-title>
                             <v-text-field v-model="editcheckin.id" label="รหัส" ></v-text-field>
-                            <v-text-field type="datetime-local" v-model="editcheckin.class_date" label="เวลา"></v-text-field>
+                            <v-text-field type="datetime-local" v-model="editcheckin.class_date" label="เวลา" :value="currentDateTime"></v-text-field>
                             <v-text-field v-model="editcheckin.section" label="ห้อง"></v-text-field>
                             <div v-for="(q, index) in quiz" :key="index" class="pa-2"> 
                               <h4>ข้อ {{ generateId(index)}}</h4>
