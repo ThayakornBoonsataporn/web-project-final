@@ -16,12 +16,38 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <title>Admin Home Page</title>
 </head>
+<style>
+  .BGcode{
+      background-color: #ffe6c7;
+      color: Black;
+  }
+  .BGpre{
+      background-color: #bddcf4;
+      color: Black;
+  }
+  .BGname{
+      background-color: #bcd1d0;
+      color: Black;
+  }
+  .BGemail{
+      background-color: #b8c7b9;
+      color: Black;
+  }
+  .BGphone{
+      background-color: #ffe6c7;
+      color: Black;
+  }
+  .BGphone{
+      background-color: #ffe6c7;
+      color: Black;
+  }
+</style>
 <body>
     <div id = "app">
         <v-app>
             <v-container>
                 <v-card>
-                    <v-card-title class="bg-pink">{{title}}</v-card-title>
+                  <v-card-title class="bg-primary">{{title}}</v-card-title>
                       <v-card-actions >
                         <template v-if="user">
                           <div class="pa-2">
@@ -35,50 +61,47 @@
                     </v-card-actions>
                   
                     <v-card-text class="pa-6">
-                        <table width="100%" >
-                            <thead>
-                              <tr>
-                                <td>รหัส</td>
-                                <td>คำนำหน้า</td>
-                                <td>ชื่อ</td>
-                                <td>สกุล</td>
-                                <td>Email</td>
-                                <td>Section</td>
-                                <td>Edit</td>
-                                <td>Delete student</td>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr v-for="(s) in student">
-                                <td>{{s.id}}</td>
-                                <td>{{s.title}}</td>
-                                <td>{{s.fname}}</td>
-                                <td>{{s.lname}}</td>
-                                <td>{{s.email}}</td>
-                                <td>{{s.section}}</td>
-                                <td>
-                                    <v-btn @click="edit(s)"><v-icon icon="mdi-account-edit"></v-icon></v-btn>
-                                </td>
-                                <td><v-btn @click="deleteData(s)"><v-icon icon="mdi-account-remove"></v-icon></v-btn></td>
-                              </tr>
-                            </tbody>
-                          </table>
+                      <table width="100%" >
+                          <thead>
+                            <tr>
+                              <td class="bg-warning">รหัส</td>
+                              <td class="bg-blue">คำนำหน้า</td>
+                              <td class="bg-secondary">ชื่อ</td>
+                              <td class="bg-secondary">สกุล</td>
+                              <td class="bg-success">Email</td>
+                              <td class="bg-warning">โทรศัพท์</td>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="(s) in students">
+                              <td class="BGcode">{{s.id}}</td>
+                              <td class="BGpre">{{s.title}}</td>
+                              <td class="BGname">{{s.fname}}</td>
+                              <td class="BGname">{{s.lname}}</td>
+                              <td class="BGemail">{{s.email}}</td>
+                              <td class="BGcode">{{s.phone}}</td>
+                              <td>
+                                  <v-btn @click="edit(s)"><v-icon icon="mdi-account-edit"></v-icon></v-btn>
+                              </td>
+                              <td><v-btn @click="deleteData(s)"><v-icon icon="mdi-account-remove"></v-icon></v-btn></td>
+                            </tr>
+                          </tbody>
+                        </table>
                     </v-card-text>
-                    <v-card-actions>
-                        <v-btn @click="addData()" class="btn bg-green">Add student</v-btn>
-                        <v-btn @click="addDataqiz()" class="btn bg-blue">Add a question</v-btn>
-                        <v-btn @click="cheksend()" class="btn btn-warning" >Answer</v-btn>
-                        <v-btn @click="showsubject()" class="btn bg-pink" >All questions</v-btn>
-                    </v-card-actions>         
-    
-                    <v-card-actions>
-                        <v-btn @click="google_login()" v-if="!user"> Login</v-btn>
-                        <div v-if="user">
-                          <v-btn @click="google_logout()" v-if="user" class="btn btn-danger"> Logout</v-btn>   
-                        </div>
-                             
-                    </v-card-actions>
-                </v-card>
+                    <v-card-actions class="bg-primary">
+                      <v-btn @click="addData()" class="btn bg-green">Add student</v-btn>
+                      <v-btn @click="addDataqiz()" class="btn bg-blue">Add a question</v-btn>
+                      <v-btn @click="cheksend()" class="btn btn-warning" >Answer</v-btn>
+                      <v-btn @click="showsubject()" class="btn bg-pink" >All questions</v-btn>
+                  </v-card-actions>         
+  
+                  <v-card-actions class="bg-primary">
+                      <v-btn class="bg-pink" @click="google_login()" v-if="!user"> Login</v-btn>
+                      <div v-if="user">
+                        <v-btn @click="google_logout()" v-if="user" class="btn btn-danger"> Logout</v-btn>   
+                      </div>
+                  </v-card-actions>
+              </v-card>
                 
                 <v-card-text class="pa-6" v-if="mode === 'เช็คคำตอบ'">
                     <table width="100%" >
