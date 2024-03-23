@@ -87,7 +87,7 @@ const firebaseConfig = {
         }
       },
       getstudent(email) {
-        db.collection("students")
+        db.collection("student")
           .where("email", "==", email)
           .limit(1)
           .get()
