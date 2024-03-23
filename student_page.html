@@ -22,7 +22,7 @@
         <v-app>
             <v-container>
                 <v-card>
-                    <v-card-title class="bg-pink">{{title}}</v-card-title>
+                    <v-card-title class="bg-primary">{{title}}</v-card-title>
                       <v-card-actions >
                         <template v-if="user">
                           <div class="pa-2">
@@ -65,12 +65,11 @@
                     </v-card-actions>
                     
     
-                    <v-card-actions>
-                        <v-btn @click="google_login()" v-if="!user"> Login</v-btn>
-                        <div v-if="user">
-                          <v-btn @click="google_logout()" v-if="user" class="btn btn-danger"> Logout</v-btn>   
-                        </div>
-                             
+                    <v-card-actions class="bg-primary">
+                      <v-btn class="bg-pink" @click="google_login()" v-if="!user"> Login</v-btn>
+                      <div v-if="user">
+                        <v-btn @click="google_logout()" v-if="user" class="btn btn-danger"> Logout</v-btn>   
+                      </div>
                     </v-card-actions>
                 </v-card>
                
