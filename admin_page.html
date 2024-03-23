@@ -93,14 +93,11 @@
                       <v-btn @click="addDataqiz()" class="btn bg-blue">Add a question</v-btn>
                       <v-btn @click="cheksend()" class="btn btn-warning" >Answer</v-btn>
                       <v-btn @click="showsubject()" class="btn bg-pink" >All questions</v-btn>
-                  </v-card-actions>         
-  
-                  <v-card-actions class="bg-primary">
                       <v-btn class="bg-pink" @click="google_login()" v-if="!user"> Login</v-btn>
                       <div v-if="user">
-                        <v-btn @click="google_logout()" v-if="user" class="btn btn-danger"> Logout</v-btn>   
+                        <v-btn @click="google_logout()" v-if="user" class="btn btn-danger" style="margin-left: 7%;"> Logout</v-btn>   
                       </div>
-                  </v-card-actions>
+                  </v-card-actions>         
               </v-card>
                 
                 <v-card-text class="pa-6" v-if="mode === 'เช็คคำตอบ'">

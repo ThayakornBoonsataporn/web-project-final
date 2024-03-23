@@ -36,12 +36,14 @@
             <div v-if="user">
               <v-btn @click="google_logout()" v-if="user" class="btn btn-danger">Logout</v-btn>
               <div v-for="(s) in student">
-                <v-btn v-if="user.email == s.email" class="btn bg-success w-100">
+                <v-btn v-if="user.email == s.email" class="btn bg-success">
                   <a href="student_page.html" style="color:white;text-decoration: none">Next for students</a>
                 </v-btn>
               </div>
               <div v-for="(t) in teacher">
-                <v-btn v-if="user.email == t.email"><a href="admin_page.html" class="btn btn-primary">Next for Teachers</a></v-btn>
+                <v-btn v-if="user.email == t.email" class="btn bg-warning">
+                  <a href="admin_page.html" style="color:white;text-decoration: none">Next for Teachers</a>
+                </v-btn>
               </div>
             </div>
           </v-card-actions>
