@@ -86,12 +86,12 @@
                           </tbody>
                         </table>
                     </v-card-text>
-                    <v-card-actions>
+                    <!-- <v-card-actions>
                         <v-btn @click="addData()" class="btn bg-green">Add student</v-btn>
                         <v-btn v-if="!existingQuiz" @click="addDataqiz()" class="btn bg-blue">Add a question</v-btn>
-                        <v-btn @click="cheksend()" class="btn btn-warning" >Answer</v-btn>
-                        <v-btn @click="showsubject()" class="btn bg-pink" >All questions</v-btn>
-                    </v-card-actions>         
+                        <v-btn @click="cheksend()" class="btn btn-warning">Answer</v-btn>
+                        <v-btn @click="showsubject()" class="btn bg-pink">All questions</v-btn>
+                    </v-card-actions> -->      
     
                     <v-card-actions>
                         <v-btn @click="google_login()" v-if="!user"> Login</v-btn>
@@ -103,7 +103,7 @@
                 </v-card>
                     <v-card-actions class="bg-primary">
                       <v-btn @click="addData()" class="btn bg-green">Add student</v-btn>
-                      <v-btn @click="addDataqiz()" class="btn bg-blue">Add a question</v-btn>
+                      <v-btn v-if="!existingQuiz" @click="addDataqiz()" class="btn bg-blue">Add a question</v-btn>
                       <v-btn @click="cheksend()" class="btn btn-warning" >Answer</v-btn>
                       <v-btn @click="showsubject()" class="btn bg-pink" >All questions</v-btn>
                       <v-btn class="bg-pink" @click="google_login()" v-if="!user"> Login</v-btn>
