@@ -86,6 +86,23 @@
                           </tbody>
                         </table>
                     </v-card-text>
+<<<<<<< HEAD
+                    <v-card-actions>
+                        <v-btn @click="addData()" class="btn bg-green">Add student</v-btn>
+                        <v-btn v-if="!existingQuiz" @click="addDataqiz()" class="btn bg-blue">Add a question</v-btn>
+                        <v-btn @click="cheksend()" class="btn btn-warning" >Answer</v-btn>
+                        <v-btn @click="showsubject()" class="btn bg-pink" >All questions</v-btn>
+                    </v-card-actions>         
+    
+                    <v-card-actions>
+                        <v-btn @click="google_login()" v-if="!user"> Login</v-btn>
+                        <div v-if="user">
+                          <v-btn @click="google_logout()" v-if="user" class="btn btn-danger"> Logout</v-btn>   
+                        </div>
+                             
+                    </v-card-actions>
+                </v-card>
+=======
                     <v-card-actions class="bg-primary">
                       <v-btn @click="addData()" class="btn bg-green">Add student</v-btn>
                       <v-btn @click="addDataqiz()" class="btn bg-blue">Add a question</v-btn>
@@ -97,6 +114,7 @@
                       </div>
                   </v-card-actions>         
               </v-card>
+>>>>>>> eadf85f283acc30b8980ac03d6827055fdfbe53a
                 
                 <v-card-text class="pa-6" v-if="mode === 'เช็คคำตอบ'">
                     <table width="100%" >
@@ -105,17 +123,13 @@
                             <td>รหัสนักศึกษา</td>
                             <td>วันเวลา</td>
                             <td>คำตอบ</td>
-                            <td>ห้อง</td>
-                            <td>คำถาม</td>
                           </tr>
                         </thead>
                         <tbody>
                           <tr v-for="(c) in checkin">
                             <td>{{c.id}}</td>
                             <td>{{c.class_date}}</td>
-                            <td>{{c.qiz_send}}</td>
-                            <td>{{c.room}}</td>
-                            <td>{{c.subject}}</td>
+                            <td>{{c[1]}}</td>
                             <td>
                             </td>
                             <td><v-btn @click="deleted(c)"><v-icon icon="mdi-account-remove"></v-icon></v-btn></td>
@@ -161,7 +175,7 @@
                    </v-card-actions>
                  </v-card>
 
-                 <v-card v-if="mode === 'เพิ่มคำถาม'">
+                 <v-card v-if="mode === 'เพิ่มคำถาม' && !existingQuiz">
                     <v-card-text class="pa-6">
                         <v-card-title class="bg-blue">{{mode}}</v-card-title>
                         <v-text-field v-model="editquiz.id" label="รหัส" value="Auto-ID"></v-text-field>
