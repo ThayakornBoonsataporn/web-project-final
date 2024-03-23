@@ -46,7 +46,7 @@
         </v-card>
         <v-card v-if="editmode">
           <v-card-text class="pa-6">
-            <v-card-title class="bg-blue-grey">{{editmode}}</v-card-title>
+            <v-card-title class="bg-blue-grey">{{mode}}</v-card-title>
             <v-text-field v-model="editstd.id" label="รหัส"></v-text-field>
             <v-combobox v-model="editstd.title" label="คำนำหน้า" :items="['นาย','นางสาว','ด.ช.','ด.ญ','นาง']"></v-combobox>
             <v-text-field v-model="editstd.fname" label="ชื่อ"></v-text-field>
