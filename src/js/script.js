@@ -54,7 +54,7 @@ const firebaseConfig = {
         querySnapshot.forEach((doc) => {
           stdlist.push({ id: doc.id, ...doc.data() });
         });
-        this.students = stdlist;
+        this.student = stdlist;
       });
   
       db.collection("quiz").get().then((querySnapshot) => {
@@ -103,7 +103,7 @@ const firebaseConfig = {
           querySnapshot.forEach((doc) => {
             stdlist.push({ id: doc.id, ...doc.data() });
           });
-          this.students = stdlist;
+          this.student = stdlist;
         });
       },
       addData() {
@@ -131,7 +131,7 @@ const firebaseConfig = {
         this.editcheckin = {};
       },
       savedata() {
-        db.collection("students")
+        db.collection("student")
           .doc(this.editstd.id)
           .set(this.editstd)
           .then(() => {
