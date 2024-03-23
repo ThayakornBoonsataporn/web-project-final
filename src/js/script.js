@@ -177,7 +177,7 @@ const firebaseConfig = {
       },
       saveqiz_back() {
         db.collection("checkin")
-          .doc(this.editcheckin.id)
+          .doc(this.editcheckin.uniqueId)
           .set(this.editcheckin)
           .then(() => {
             alert('Data saved successfully!');
